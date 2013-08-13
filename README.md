@@ -9,11 +9,36 @@ The actual source code, wiki, issue tracker etc. are all hosted on [GitHub][2]. 
 
 or add ```gem "gosu", "~> 0.7.48"``` to your Gemfile and run ```bundle```.
 
+To test whether everything works as expected, you can use this Hello World script:
+```
+require 'rubygems' # only necessary in Ruby 1.8
+require 'gosu'
+
+class MyWindow < Gosu::Window
+  def initialize
+   super(640, 480, false)
+   self.caption = 'Hello World!'
+  end
+end
+
+window = MyWindow.new
+window.show
+```
+
 #####Play around with the example games
 
 ```
-cd
+cd examples
 ```
+
+and then:
+```ruby CptnRuby.rb```
+
+or:
+```ruby RMagickIntegration.rb```
+
+or:
+```ruby Tutorial.rb```
 
 [1]: http://www.libgosu.org/
 [2]: http://github.com/jlnr/gosu/
