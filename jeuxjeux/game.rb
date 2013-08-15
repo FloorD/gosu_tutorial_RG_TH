@@ -34,6 +34,25 @@ class Player
   end
 end
 
+class Map
+  def initialize(window, width, height, rows, columns)
+    @tiles = []
+    rows.times do |y|
+      columns.times do |x|
+        if rand < 0.2
+          @tiles << Tile.new(window, x, y)
+        end
+      end
+    end
+  end
+
+  def draw
+    @tiles.each do |tile|
+      tile.draw
+    end
+  end
+end
+
 class Game < Window
 
    WIDTH = 960
@@ -43,22 +62,15 @@ class Game < Window
    NUMBER_OF_ROWS = 11
    NUMBER_OF_COLUMNS = 15
 
+   attr_reader :map
+
   def initialize
     puts 'You can use puts to print out debugging information'
     super(WIDTH, HEIGHT, false)
     self.caption = "RailsGirls: The Mysteries of Ruby"
     @background_image = Image.new(self, "media/map.png", true)
-    @tiles = []
+    @map = Map.new(self, WIDTH, HEIGHT, NUMBER_OF_ROWS, NUMBER_OF_COLUMNS)
     @player = Player.new(self)
-
-    NUMBER_OF_ROWS.times do |y|
-      NUMBER_OF_COLUMNS.times do |x|
-        if rand < 0.2
-          @tiles << Tile.new(self, x, y)
-        end
-      end
-    end
-
   end
 
   def update
@@ -74,9 +86,7 @@ class Game < Window
 
   def draw
     @background_image.draw(0, 0, 0)
-    @tiles.each do |tile|
-      tile.draw
-    end
+    @map.draw
     @player.draw
   end
 
