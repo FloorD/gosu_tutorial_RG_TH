@@ -5,6 +5,16 @@ require 'gosu'
 
 include Gosu
 
+class Rectangle
+  attr_accessor :x,:y,:width, :height
+  def initialize(x, y, width, height)
+    @x = x
+    @y = y
+    @width = width
+    @height = height
+  end
+end
+
 class Block
 
   attr_reader :x, :y
@@ -19,12 +29,18 @@ class Block
     @image.draw(@x, @y, 0)
   end
 
-  def intersects?(x, y)
-    if x + Game::TILE_SIZE >= @x && x <= @x + Game::TILE_SIZE && y + Game::TILE_SIZE >= @y && y <= @y + Game::TILE_SIZE
+  def intersects?(bounds)
+    if bounds.x + bounds.width >= @x && bounds.x <= @x + Game::TILE_SIZE && bounds.y + bounds.height >= @y && bounds.y <= @y + Game::TILE_SIZE
       true
     else
       false
     end
+
+      #if ((r1.X + r1.Width >= r2.X) and (r1.X <= r2.X + r2.Width))
+    #and ((r1.Y + r1.Height >= r2.Y) and (r1.Y <= r2.Y + r2.Height)) then
+      #return true
+    #else
+      #return false
   end
 
   def free?
@@ -44,7 +60,7 @@ class EmptyTile
     true
   end
 
-  def intersects?(x, y)
+  def intersects?(bounds)
     false
   end
 
@@ -64,7 +80,7 @@ class Player
   end
 
   def update(x, y)
-    if @map.free?(@x + x, @y + y)
+    if @map.free?(Rectangle.new(@x + x + Game::TILE_SIZE / 2, @y + y + Game::TILE_SIZE / 2, 10, 10))
       @x += x
       @y += y
     end
@@ -97,12 +113,12 @@ class Map
     end
   end
 
-  def free?(x, y)
+  def free?(bounds)
     !@tiles.any? do |tile|
       if tile.nil?
         false
       else
-        tile.intersects?(x,y)
+        tile.intersects?(bounds)
       end
     end
   end
