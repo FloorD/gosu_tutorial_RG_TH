@@ -11,3 +11,7 @@
 ## Assets
 
 The ones used in vim adventures, you can find them [here](http://www.lostgarden.com/2007/05/dancs-miraculously-flexible-game.html)
+
+## Sounds
+
+[Matthew Klingensmith (www.matthewklingensmith.com)](http://opengameart.org/content/matts-creative-commons-music)
