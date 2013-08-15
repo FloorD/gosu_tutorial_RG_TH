@@ -35,12 +35,6 @@ class Block
     else
       false
     end
-
-      #if ((r1.X + r1.Width >= r2.X) and (r1.X <= r2.X + r2.Width))
-    #and ((r1.Y + r1.Height >= r2.Y) and (r1.Y <= r2.Y + r2.Height)) then
-      #return true
-    #else
-      #return false
   end
 
   def free?
