@@ -21,8 +21,8 @@ class Block
 
   def initialize(window, x, y)
     @image = Image.new(window, "media/block.png", true)
-    @x = x * Game::TILE_SIZE + Game::OFFSET_X
-    @y = y * Game::TILE_SIZE + Game::OFFSET_Y
+    @x = x * Game::TILE_SIZE
+    @y = y * Game::TILE_SIZE
   end
 
   def draw
@@ -46,8 +46,8 @@ class EmptyTile
   attr_reader :x, :y
 
   def initialize(window, x, y)
-    @x = x * Game::TILE_SIZE + Game::OFFSET_X
-    @y = y * Game::TILE_SIZE + Game::OFFSET_Y
+    @x = x * Game::TILE_SIZE
+    @y = y * Game::TILE_SIZE
   end
 
   def free?
@@ -108,6 +108,8 @@ class Map
   end
 
   def free?(bounds)
+    return false if bounds.x > Game::WIDTH || bounds.x < 0 || bounds.y < 0 || bounds.y > Game::HEIGHT
+
     !@tiles.any? do |tile|
       if tile.nil?
         false
@@ -123,10 +125,8 @@ class Game < Window
    TILE_SIZE = 56
    WIDTH = 960
    HEIGHT = 640
-   OFFSET_X = 112
-   OFFSET_Y = 14
    NUMBER_OF_ROWS = 11
-   NUMBER_OF_COLUMNS = 15
+   NUMBER_OF_COLUMNS = 17
    WALKING_SPEED = 3
 
    attr_reader :map
