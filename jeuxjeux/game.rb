@@ -127,6 +127,7 @@ class Game < Window
    OFFSET_Y = 14
    NUMBER_OF_ROWS = 11
    NUMBER_OF_COLUMNS = 15
+   WALKING_SPEED = 3
 
    attr_reader :map
 
@@ -142,10 +143,10 @@ class Game < Window
   def update
     move_x = 0
     move_y = 0
-    move_x -= 5 if button_down? KbLeft
-    move_x += 5 if button_down? KbRight
-    move_y += 5 if button_down? KbDown
-    move_y -= 5 if button_down? KbUp
+    move_x -= WALKING_SPEED if button_down? KbLeft
+    move_x += WALKING_SPEED if button_down? KbRight
+    move_y += WALKING_SPEED if button_down? KbDown
+    move_y -= WALKING_SPEED if button_down? KbUp
 
     @player.update(move_x, move_y)
   end
