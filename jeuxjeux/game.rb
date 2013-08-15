@@ -5,28 +5,66 @@ require 'gosu'
 
 include Gosu
 
-class Tile
+class Block
+
+  attr_reader :x, :y
+
   def initialize(window, x, y)
     @image = Image.new(window, "media/block.png", true)
-    @x = x * @image.width + Game::OFFSET_X
-    @y = y * @image.height + Game::OFFSET_Y
+    @x = x * Game::TILE_SIZE + Game::OFFSET_X
+    @y = y * Game::TILE_SIZE + Game::OFFSET_Y
   end
 
   def draw
     @image.draw(@x, @y, 0)
   end
+
+  def intersects?(x, y)
+    #x > @x && x < @x + @image.width
+    false
+  end
+
+  def free?
+    false
+  end
+end
+
+class EmptyTile
+  attr_reader :x, :y
+
+  def initialize(window, x, y)
+    @x = x * Game::TILE_SIZE + Game::OFFSET_X
+    @y = y * Game::TILE_SIZE + Game::OFFSET_Y
+  end
+
+  def free?
+    true
+  end
+
+  def intersects?(x, y)
+    false
+  end
+
+  def draw
+
+  end
+
 end
 
 class Player
-  def initialize(window)
+  def initialize(window, map)
+    @map = map
     @image = Image.new(window, "media/player.png", true)
-    @x = 580
-    @y = 500
+    start = @map.tiles.detect{|t| t.free? }
+    @x = start.x
+    @y = start.y
   end
 
   def update(x, y)
-    @x += x
-    @y += y
+    if @map.free?(@x + x, @y + y)
+      @x += x
+      @y += y
+    end
   end
 
   def draw
@@ -35,12 +73,16 @@ class Player
 end
 
 class Map
+  attr_reader :tiles
+
   def initialize(window, width, height, rows, columns)
     @tiles = []
     rows.times do |y|
       columns.times do |x|
         if rand < 0.2
-          @tiles << Tile.new(window, x, y)
+          @tiles << Block.new(window, x, y)
+        else
+          @tiles << EmptyTile.new(window, x, y)
         end
       end
     end
@@ -51,10 +93,21 @@ class Map
       tile.draw
     end
   end
+
+  def free?(x, y)
+    !@tiles.any? do |tile|
+      if tile.nil?
+        false
+      else
+        tile.intersects?(x,y)
+      end
+    end
+  end
 end
 
 class Game < Window
 
+   TILE_SIZE = 56
    WIDTH = 960
    HEIGHT = 640
    OFFSET_X = 112
@@ -70,7 +123,7 @@ class Game < Window
     self.caption = "RailsGirls: The Mysteries of Ruby"
     @background_image = Image.new(self, "media/map.png", true)
     @map = Map.new(self, WIDTH, HEIGHT, NUMBER_OF_ROWS, NUMBER_OF_COLUMNS)
-    @player = Player.new(self)
+    @player = Player.new(self, @map)
   end
 
   def update
