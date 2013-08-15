@@ -20,8 +20,11 @@ class Block
   end
 
   def intersects?(x, y)
-    #x > @x && x < @x + @image.width
-    false
+    if x + Game::TILE_SIZE >= @x && x <= @x + Game::TILE_SIZE && y + Game::TILE_SIZE >= @y && y <= @y + Game::TILE_SIZE
+      true
+    else
+      false
+    end
   end
 
   def free?
