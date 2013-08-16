@@ -224,7 +224,7 @@ class Game < Window
     self.caption = "RailsGirls: The Mysteries of Ruby"
     @background_image = Image.new(self, "media/map.png", true)
     @background_music = Song.new(self, "media/4pm.mp3")
-    #@background_music.play(true)
+    @background_music.play(true)
     @map = Map.new(self, WIDTH, HEIGHT, NUMBER_OF_ROWS, NUMBER_OF_COLUMNS)
     4.times do
       @map.entities << Bug.new(self, @map)
