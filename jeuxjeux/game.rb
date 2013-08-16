@@ -68,7 +68,7 @@ class Player
   def initialize(window, map)
     @map = map
     @image = Image.new(window, "media/player.png", true)
-    start = @map.tiles.detect{|t| t.free? }
+    start = @map.tiles.select{|t| t.free? }.sample
     @x = start.x
     @y = start.y
   end
@@ -83,12 +83,92 @@ class Player
   def draw
     @image.draw(@x,@y, 0)
   end
+
+  def intersects?(bounds)
+    false
+  end
 end
 
+class Bug
+  def initialize(window, map)
+    @map = map
+    @image = Image.new(window, "media/bug.png", true)
+    start = @map.tiles.select{|t| t.free? }.sample
+    @x = start.x
+    @y = start.y
+  end
+
+  def update
+    if rand < 0.5
+      @y += 1 * (rand < 0.5 ? -1 : 1)
+    else
+      @x += 1 * (rand < 0.5 ? -1 : 1)
+    end
+  end
+
+  def draw
+    @image.draw(@x,@y, 0)
+  end
+
+  def intersects?(bounds)
+    false
+  end
+end
+
+class Door
+  def initialize(window, map)
+    @map = map
+    @image = Image.new(window, "media/door_tall_closed.png", true)
+    start = @map.tiles.select{|t| t.free? }.sample
+    @x = start.x
+    @y = start.y
+  end
+
+  def update
+
+  end
+
+  def draw
+    @image.draw(@x,@y, 0)
+  end
+
+  def intersects?(bounds)
+    false
+  end
+end
+
+
+class CollectibleGem
+  GEMS = ["gem_blue", "gem_green", "gem_orange"]
+
+  def initialize(window, map)
+    @map = map
+    @image = Image.new(window, "media/#{GEMS.sample}.png", true)
+    start = @map.tiles.select{|t| t.free? }.sample
+    @x = start.x
+    @y = start.y
+  end
+
+  def update
+
+  end
+
+  def draw
+    @image.draw(@x,@y, 0)
+  end
+
+  def intersects?(bounds)
+    false
+  end
+end
+
+
 class Map
-  attr_reader :tiles
+  attr_accessor :entities
+  attr_accessor :tiles
 
   def initialize(window, width, height, rows, columns)
+    @entities = []
     @tiles = []
     rows.times do |y|
       columns.times do |x|
@@ -101,16 +181,23 @@ class Map
     end
   end
 
+  def update
+    @entities.each{|e| e.update}
+  end
+
   def draw
     @tiles.each do |tile|
       tile.draw
+    end
+    @entities.each do |entity|
+      entity.draw
     end
   end
 
   def free?(bounds)
     return false if bounds.x > Game::WIDTH || bounds.x < 0 || bounds.y < 0 || bounds.y > Game::HEIGHT
 
-    !@tiles.any? do |tile|
+    !@entities.any? do |tile|
       if tile.nil?
         false
       else
@@ -137,8 +224,17 @@ class Game < Window
     self.caption = "RailsGirls: The Mysteries of Ruby"
     @background_image = Image.new(self, "media/map.png", true)
     @background_music = Song.new(self, "media/4pm.mp3")
-    @background_music.play(true)
+    #@background_music.play(true)
     @map = Map.new(self, WIDTH, HEIGHT, NUMBER_OF_ROWS, NUMBER_OF_COLUMNS)
+    4.times do
+      @map.entities << Bug.new(self, @map)
+    end
+    10.times do
+      @map.entities << CollectibleGem.new(self, @map)
+    end
+
+    @map.entities << Door.new(self, @map)
+
     @player = Player.new(self, @map)
   end
 
@@ -151,12 +247,12 @@ class Game < Window
     move_y -= WALKING_SPEED if button_down? KbUp
 
     @player.update(move_x, move_y)
+    @map.update
   end
 
   def draw
     @background_image.draw(0, 0, 0)
     @map.draw
-    @player.draw
   end
 
   def button_down(id)
