@@ -253,6 +253,7 @@ class Game < Window
   def draw
     @background_image.draw(0, 0, 0)
     @map.draw
+    @player.draw
   end
 
   def button_down(id)
