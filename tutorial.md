@@ -1,5 +1,6 @@
 Open your texteditor and paste  
-```#!/usr/bin/env ruby -w  
+```
+#!/usr/bin/env ruby -w  
 require 'rubygems'  
 require 'gosu'  
 include Gosu  
