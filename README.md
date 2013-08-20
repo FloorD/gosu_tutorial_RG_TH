@@ -28,7 +28,7 @@ window.show
 #####Play around with the example games
 
 ```
-cd examples
+cd $GEM_HOME/gems/gosu-0.7.48/examples
 ```
 
 and then:
