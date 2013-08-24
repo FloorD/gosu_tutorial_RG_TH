@@ -28,7 +28,7 @@ class Main < Window
     @game_over_screen  = GameOverScreen.new(self)
     @controller        = @menu_controller
     @levels            = read_levels
-    @controller        = show_next_level
+    show_main_menu
   end
 
   def show_main_menu
