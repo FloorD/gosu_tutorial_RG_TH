@@ -2,6 +2,8 @@ class Player
 
   WALKING_SPEED = 10
 
+  attr_reader :x, :y
+
   def initialize(window, column, row)
     @window = window
     @image = Image.new(@window, "media/player.png", true)

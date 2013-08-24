@@ -4,6 +4,7 @@ $LOAD_PATH << './lib'
 require 'rubygems'
 require 'gosu'
 require 'menu'
+require 'game_over_screen'
 require 'level'
 require 'map'
 require 'colored_gem'
@@ -24,6 +25,7 @@ class Main < Window
     super(WIDTH, HEIGHT, false)
     self.caption       = "RailsGirls: The Mysteries of Ruby"
     @menu_controller   = Menu.new(self)
+    @game_over_screen  = GameOverScreen.new(self)
     @controller        = @menu_controller
     @levels            = read_levels
     @controller        = show_next_level
@@ -40,6 +42,10 @@ class Main < Window
     else
       show_main_menu
     end
+  end
+
+  def show_game_over_screen
+    @controller = @game_over_screen
   end
 
   def update

@@ -1,4 +1,7 @@
 class Bug
+
+  attr_reader :x, :y
+
   def initialize(window, column, row)
     @window = window
     @image = Image.new(@window, "media/bug.png", true)

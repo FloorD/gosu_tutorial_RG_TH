@@ -19,6 +19,9 @@ class Level
     @player.move_up     if @window.button_down? KbUp
     @player.move_down   if @window.button_down? KbDown
     @player.collect_gems(@gems)
+    if hit_by_bug?
+      game_over
+    end
   end
 
   def draw
@@ -33,6 +36,17 @@ class Level
     if id == Gosu::KbEscape || id == Gosu::KbQ then
       @window.show_main_menu
     end
+  end
+
+  def hit_by_bug?
+    @bugs.any? do |bug|
+      Gosu::distance(@player.x, @player.y, bug.x, bug.y) < 35
+    end
+  end
+
+  def game_over
+    puts 'game over'
+    @window.show_game_over_screen
   end
 
   def read_level(level, rows, columns)
