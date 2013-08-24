@@ -18,7 +18,6 @@ class Game < Window
 
   def initialize
     puts 'You can use puts to print out debugging information'
-    puts WIDTH, HEIGHT
     super(WIDTH, HEIGHT, false)
     self.caption       = "RailsGirls: The Mysteries of Ruby"
     @background_music  = Song.new(self, "media/4pm.mp3")
