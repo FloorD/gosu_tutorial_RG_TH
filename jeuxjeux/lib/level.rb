@@ -9,7 +9,7 @@ class Level
     @window.caption         = "RailsGirls: The Mysteries of Ruby"
     @background_music       = Song.new(@window, "media/4pm.mp3")
     @map                    = Map.new(@window, ROWS, COLUMNS)
-    @player, @gems, @bugs   = read_level(level, ROWS, COLUMNS)
+    @player, @gems, @bugs, @key = read_level(level, ROWS, COLUMNS)
     @background_music.play(true) unless ENV['DISABLE_SOUND'] == 'true'
   end
 
@@ -19,8 +19,11 @@ class Level
     @player.move_up     if @window.button_down? KbUp
     @player.move_down   if @window.button_down? KbDown
     @player.collect_gems(@gems)
+    @player.collect_key(@key) unless @player.key_collected?
     if hit_by_bug?
       game_over
+    elsif @gems.size == 0 && @player.key_collected?
+      level_finished
     end
   end
 
@@ -29,6 +32,7 @@ class Level
     (@gems + @bugs).each do |e|
       e.draw
     end
+    @key.draw unless @player.key_collected?
     @player.draw
   end
 
@@ -44,6 +48,11 @@ class Level
     end
   end
 
+  def level_finished
+    puts 'finished level'
+    @window.show_level_finished_screen
+  end
+
   def game_over
     puts 'game over'
     @window.show_game_over_screen
@@ -53,6 +62,7 @@ class Level
     player = nil
     gems   = []
     bugs   = []
+    key    = nil
     level  = File.open(level[:path]).readlines[1..-1]
 
     rows.times do |row|
@@ -64,13 +74,15 @@ class Level
             gems << ColoredGem.new(@window, column, row)
           when 'B'
             bugs << Bug.new(@window, column, row)
+          when 'K'
+            key = Key.new(@window, column, row)
           else
             #nothing
         end
       end
     end
 
-    [player, gems, bugs]
+    [player, gems, bugs, key]
   end
 end
 

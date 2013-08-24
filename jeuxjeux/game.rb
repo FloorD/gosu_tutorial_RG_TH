@@ -5,10 +5,12 @@ require 'rubygems'
 require 'gosu'
 require 'menu'
 require 'game_over_screen'
+require 'level_finished_screen'
 require 'level'
 require 'map'
 require 'colored_gem'
 require 'bug'
+require 'key'
 require 'player'
 
 include Gosu
@@ -23,15 +25,17 @@ class Main < Window
   def initialize
     puts 'You can use puts to print out debugging information'
     super(WIDTH, HEIGHT, false)
-    self.caption       = "RailsGirls: The Mysteries of Ruby"
-    @menu_controller   = Menu.new(self)
-    @game_over_screen  = GameOverScreen.new(self)
-    @controller        = @menu_controller
-    @levels            = read_levels
+    self.caption            = "RailsGirls: The Mysteries of Ruby"
+    @menu_controller        = Menu.new(self)
+    @game_over_screen       = GameOverScreen.new(self)
+    @level_finished_screen  = LevelFinishedScreen.new(self)
+    @controller             = @menu_controller
+    @levels                 = read_levels
     show_main_menu
   end
 
   def show_main_menu
+    @levels = read_levels
     @controller = @menu_controller
   end
 
@@ -46,6 +50,10 @@ class Main < Window
 
   def show_game_over_screen
     @controller = @game_over_screen
+  end
+
+  def show_level_finished_screen
+    @controller = @level_finished_screen
   end
 
   def update

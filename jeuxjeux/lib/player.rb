@@ -13,6 +13,7 @@ class Player
     @offset_y = 70
     @x = column * @image.width
     @y = row * @offset_y
+    @key_collected = false
   end
 
   def update
@@ -49,11 +50,21 @@ class Player
 
   def collect_gems(gems)
     gems.reject! do |gem|
-      if Gosu::distance(@x, @y, gem.x, gem.y) < 35 then
-        true
-      else
-        false
-      end
+      Gosu::distance(@x, @y, gem.x, gem.y) < 35
+    end
+  end
+
+  def key_collected?
+    @key_collected
+  end
+
+  def collect_key(key)
+    if Gosu::distance(@x, @y, key.x, key.y) < 35
+      puts 'key collected'
+      @key_collected = true
+      true
+    else
+      false
     end
   end
 
