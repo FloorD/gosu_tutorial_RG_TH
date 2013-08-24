@@ -9,8 +9,8 @@ include Gosu
 
 class Game < Window
 
-   WIDTH = 960
-   HEIGHT = 640
+   WIDTH = Gosu.screen_width
+   HEIGHT = Gosu.screen_height
    WALKING_SPEED = 10
 
   def initialize

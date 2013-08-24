@@ -4,6 +4,8 @@ class Player
     @image = Image.new(@window, "media/player.png", true)
     @width = @image.width
     @height = @image.height
+    @offset_x = 40
+    @offset_y = 60
     @x = @window.width / 2
     @y = @window.height / 2
   end
@@ -26,11 +28,11 @@ class Player
   end
 
   def fits_horizontally?(x)
-    x > 0 && x + @width < @window.width
+    x > -10 && x + @width < @window.width
   end
 
   def fits_vertically?(y)
-    y > 0 && y + @height < @window.height
+    y > 0 - @offset_y && y + @height - @offset_x < @window.height
   end
 end
 
