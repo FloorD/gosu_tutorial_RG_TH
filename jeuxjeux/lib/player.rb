@@ -23,6 +23,16 @@ class Player
     @image.draw(@x,@y, 0)
   end
 
+  def collect_gems(gems)
+    gems.reject! do |gem|
+      if Gosu::distance(@x, @y, gem.x, gem.y) < 35 then
+        true
+      else
+        false
+      end
+    end
+  end
+
   def fits?(x, y)
     fits_horizontally?(x) && fits_vertically?(y)
   end

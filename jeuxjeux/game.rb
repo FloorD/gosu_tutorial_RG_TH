@@ -37,6 +37,7 @@ class Game < Window
     move_y += WALKING_SPEED if button_down? KbDown
     move_y -= WALKING_SPEED if button_down? KbUp
     @player.update(move_x, move_y)
+    @player.collect_gems(@gems)
   end
 
   def draw

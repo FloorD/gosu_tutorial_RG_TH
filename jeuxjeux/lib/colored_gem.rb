@@ -1,4 +1,7 @@
 class ColoredGem
+
+  attr_reader :x, :y
+
   def initialize(window, column, row)
     @window = window
 
