@@ -7,6 +7,7 @@ require 'menu'
 require 'level'
 require 'map'
 require 'colored_gem'
+require 'bug'
 require 'player'
 
 include Gosu
@@ -25,6 +26,7 @@ class Main < Window
     @menu_controller   = Menu.new(self)
     @controller        = @menu_controller
     @levels            = read_levels
+    @controller        = show_next_level
   end
 
   def show_main_menu

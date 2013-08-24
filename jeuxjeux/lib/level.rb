@@ -4,12 +4,12 @@ class Level
   COLUMNS = 15
 
   def initialize(window, level)
-    @level             = level
-    @window            = window
-    @window.caption    = "RailsGirls: The Mysteries of Ruby"
-    @background_music  = Song.new(@window, "media/4pm.mp3")
-    @map               = Map.new(@window, ROWS, COLUMNS)
-    @player, @gems     = read_level(level, ROWS, COLUMNS)
+    @level                  = level
+    @window                 = window
+    @window.caption         = "RailsGirls: The Mysteries of Ruby"
+    @background_music       = Song.new(@window, "media/4pm.mp3")
+    @map                    = Map.new(@window, ROWS, COLUMNS)
+    @player, @gems, @bugs   = read_level(level, ROWS, COLUMNS)
     @background_music.play(true) unless ENV['DISABLE_SOUND'] == 'true'
   end
 
@@ -23,8 +23,8 @@ class Level
 
   def draw
     @map.draw
-    @gems.each do |g|
-      g.draw
+    (@gems + @bugs).each do |e|
+      e.draw
     end
     @player.draw
   end
@@ -38,6 +38,7 @@ class Level
   def read_level(level, rows, columns)
     player = nil
     gems   = []
+    bugs   = []
     level  = File.open(level[:path]).readlines[1..-1]
 
     rows.times do |row|
@@ -47,13 +48,15 @@ class Level
             player = Player.new(@window, column, row)
           when 'G'
             gems << ColoredGem.new(@window, column, row)
+          when 'B'
+            bugs << Bug.new(@window, column, row)
           else
             #nothing
         end
       end
     end
 
-    [player, gems]
+    [player, gems, bugs]
   end
 end
 
