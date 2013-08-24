@@ -22,7 +22,16 @@ class Main < Window
     puts 'You can use puts to print out debugging information'
     super(WIDTH, HEIGHT, false)
     self.caption       = "RailsGirls: The Mysteries of Ruby"
-    @controller        = Menu.new(self)
+    @menu_controller   = Menu.new(self)
+    @controller        = @menu_controller
+  end
+
+  def show_main_menu
+    @controller = @menu_controller
+  end
+
+  def show_next_level
+    @controller = Level.new(self, "level/001.txt")
   end
 
   def update

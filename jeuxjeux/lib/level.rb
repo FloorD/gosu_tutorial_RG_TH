@@ -3,12 +3,13 @@ class Level
   ROWS = 11
   COLUMNS = 15
 
-  def initialize(window)
+  def initialize(window, level)
+    @level             = level
     @window            = window
     @window.caption    = "RailsGirls: The Mysteries of Ruby"
     @background_music  = Song.new(@window, "media/4pm.mp3")
     @map               = Map.new(@window, ROWS, COLUMNS)
-    @player, @gems     = read_level(ROWS, COLUMNS)
+    @player, @gems     = read_level(level, ROWS, COLUMNS)
     @background_music.play(true) unless ENV['DISABLE_SOUND'] == 'true'
   end
 
@@ -30,14 +31,14 @@ class Level
 
   def button_down(id)
     if id == Gosu::KbEscape || id == Gosu::KbQ then
-      @window.controller = Menu.new(@window)
+      @window.show_main_menu
     end
   end
 
-  def read_level(rows, columns)
+  def read_level(level, rows, columns)
     player = nil
     gems   = []
-    level  = File.open('level/001.txt').readlines[1..-1]
+    level  = File.open(level).readlines[1..-1]
 
     rows.times do |row|
       columns.times do |column|

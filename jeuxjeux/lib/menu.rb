@@ -22,7 +22,7 @@ class Menu
     if id == Gosu::KbEscape || id == Gosu::KbQ
       @window.close
     elsif id == Gosu::KbSpace
-      @window.controller = Level.new(@window)
+      @window.show_next_level
     end
   end
 end
