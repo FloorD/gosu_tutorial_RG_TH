@@ -1,13 +1,13 @@
 class Player
-  def initialize(window)
+  def initialize(window, column, row)
     @window = window
     @image = Image.new(@window, "media/player.png", true)
     @width = @image.width
     @height = @image.height
     @offset_x = 40
-    @offset_y = 60
-    @x = @window.width / 2
-    @y = @window.height / 2
+    @offset_y = 70
+    @x = column * @image.width
+    @y = row * @offset_y
   end
 
   def update(x, y)

@@ -4,6 +4,7 @@ $LOAD_PATH << './lib'
 require 'rubygems'
 require 'gosu'
 require 'map'
+require 'colored_gem'
 require 'player'
 
 include Gosu
@@ -12,16 +13,20 @@ class Game < Window
 
    WIDTH = Gosu.screen_width
    HEIGHT = Gosu.screen_height
+   ROWS = 11
+   COLUMNS = 15
    WALKING_SPEED = 10
 
   def initialize
     puts 'You can use puts to print out debugging information'
+
     super(WIDTH, HEIGHT, false)
-    self.caption = "RailsGirls: The Mysteries of Ruby"
-    @background_music = Song.new(self, "media/4pm.mp3")
+    self.caption       = "RailsGirls: The Mysteries of Ruby"
+    @background_music  = Song.new(self, "media/4pm.mp3")
+    @map               = Map.new(self, ROWS, COLUMNS)
+    @player, @gems     = read_level(ROWS, COLUMNS)
+
     @background_music.play(true) if false
-    @map = Map.new(self, 11, 15)
-    @player = Player.new(self)
   end
 
   def update
@@ -36,6 +41,9 @@ class Game < Window
 
   def draw
     @map.draw
+    @gems.each do |g|
+      g.draw
+    end
     @player.draw
   end
 
@@ -45,9 +53,25 @@ class Game < Window
     end
   end
 
-  def build_grass
-    @tiles = []
-    @image = Image.new(self, "media/", true)
+  def read_level(rows, columns)
+    player = nil
+    gems   = []
+    level  = File.open('level/001.txt').readlines[1..-1]
+
+    rows.times do |row|
+      columns.times do |column|
+        case level[row][column]
+          when 'P'
+            player = Player.new(self, column, row)
+          when 'G'
+            gems << ColoredGem.new(self, column, row)
+          else
+            #nothing
+        end
+      end
+    end
+
+    [player, gems]
   end
 end
 
