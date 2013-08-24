@@ -15,7 +15,6 @@ class Game < Window
    HEIGHT = Gosu.screen_height
    ROWS = 11
    COLUMNS = 15
-   WALKING_SPEED = 10
 
   def initialize
     puts 'You can use puts to print out debugging information'
@@ -30,13 +29,10 @@ class Game < Window
   end
 
   def update
-    move_x = 0
-    move_y = 0
-    move_x -= WALKING_SPEED if button_down? KbLeft
-    move_x += WALKING_SPEED if button_down? KbRight
-    move_y += WALKING_SPEED if button_down? KbDown
-    move_y -= WALKING_SPEED if button_down? KbUp
-    @player.update(move_x, move_y)
+    @player.move_left if button_down? KbLeft
+    @player.move_right if button_down? KbRight
+    @player.move_up if button_down? KbUp
+    @player.move_down if button_down? KbDown
     @player.collect_gems(@gems)
   end
 

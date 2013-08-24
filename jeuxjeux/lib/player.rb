@@ -1,4 +1,7 @@
 class Player
+
+  WALKING_SPEED = 10
+
   def initialize(window, column, row)
     @window = window
     @image = Image.new(@window, "media/player.png", true)
@@ -10,17 +13,36 @@ class Player
     @y = row * @offset_y
   end
 
-  def update(x, y)
+  def update
+  end
+
+  def draw
+    @image.draw(@x,@y, 0)
+  end
+
+  def move_left
+    move(-1 * WALKING_SPEED, 0)
+  end
+
+  def move_right
+    move(WALKING_SPEED, 0)
+  end
+
+  def move_up
+    move(0, -1 * WALKING_SPEED)
+  end
+
+  def move_down
+    move(0, WALKING_SPEED)
+  end
+
+  def move(x, y)
     new_x = @x + x
     new_y = @y + y
     if fits?(new_x, new_y)
       @x = new_x
       @y = new_y
     end
-  end
-
-  def draw
-    @image.draw(@x,@y, 0)
   end
 
   def collect_gems(gems)
