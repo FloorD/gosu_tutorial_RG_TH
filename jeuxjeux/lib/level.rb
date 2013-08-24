@@ -38,7 +38,7 @@ class Level
   def read_level(level, rows, columns)
     player = nil
     gems   = []
-    level  = File.open(level).readlines[1..-1]
+    level  = File.open(level[:path]).readlines[1..-1]
 
     rows.times do |row|
       columns.times do |column|

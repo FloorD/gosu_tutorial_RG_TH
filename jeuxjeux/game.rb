@@ -24,6 +24,7 @@ class Main < Window
     self.caption       = "RailsGirls: The Mysteries of Ruby"
     @menu_controller   = Menu.new(self)
     @controller        = @menu_controller
+    @levels            = read_levels
   end
 
   def show_main_menu
@@ -31,7 +32,12 @@ class Main < Window
   end
 
   def show_next_level
-    @controller = Level.new(self, "level/001.txt")
+    next_level = @levels.pop
+    if next_level
+      @controller = Level.new(self, next_level)
+    else
+      show_main_menu
+    end
   end
 
   def update
@@ -39,11 +45,22 @@ class Main < Window
   end
 
   def draw
-    @controller.draw
+   @controller.draw
   end
 
   def button_down(id)
     @controller.button_down(id)
+  end
+
+  protected
+
+  def read_levels
+    Dir.glob("level/*.txt").map do |path|
+      {
+        :path  => path,
+        :level => File.basename(path, ".txt").to_i
+      }
+    end.reverse
   end
 
 end
