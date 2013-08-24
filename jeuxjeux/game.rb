@@ -55,7 +55,7 @@ class Main < Window
   protected
 
   def read_levels
-    Dir.glob("level/*.txt").map do |path|
+    Dir.glob("levels/*.txt").map do |path|
       {
         :path  => path,
         :level => File.basename(path, ".txt").to_i
