@@ -11,14 +11,14 @@ include Gosu
 
 class Game < Window
 
-   WIDTH = Gosu.screen_width
-   HEIGHT = Gosu.screen_height
+   WIDTH = 1440
+   HEIGHT = 900
    ROWS = 11
    COLUMNS = 15
 
   def initialize
     puts 'You can use puts to print out debugging information'
-
+    puts WIDTH, HEIGHT
     super(WIDTH, HEIGHT, false)
     self.caption       = "RailsGirls: The Mysteries of Ruby"
     @background_music  = Song.new(self, "media/4pm.mp3")
