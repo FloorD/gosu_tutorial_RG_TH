@@ -23,8 +23,7 @@ class Game < Window
     @background_music  = Song.new(self, "media/4pm.mp3")
     @map               = Map.new(self, ROWS, COLUMNS)
     @player, @gems     = read_level(ROWS, COLUMNS)
-
-    @background_music.play(true) if false
+    @background_music.play(true) unless ENV['DISABLE_SOUND'] == 'true'
   end
 
   def update
