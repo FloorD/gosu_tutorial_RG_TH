@@ -3,6 +3,7 @@ $LOAD_PATH << './lib'
 
 require 'rubygems'
 require 'gosu'
+require 'map'
 require 'player'
 
 include Gosu
@@ -19,6 +20,7 @@ class Game < Window
     self.caption = "RailsGirls: The Mysteries of Ruby"
     @background_music = Song.new(self, "media/4pm.mp3")
     @background_music.play(true) if false
+    @map = Map.new(self, 11, 15)
     @player = Player.new(self)
   end
 
@@ -33,6 +35,7 @@ class Game < Window
   end
 
   def draw
+    @map.draw
     @player.draw
   end
 
@@ -40,6 +43,11 @@ class Game < Window
     if id == Gosu::KbEscape || id == Gosu::KbQ then
       close
     end
+  end
+
+  def build_grass
+    @tiles = []
+    @image = Image.new(self, "media/", true)
   end
 end
 
