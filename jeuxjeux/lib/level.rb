@@ -27,6 +27,7 @@ class Level
     elsif @gems.size == 0 && @player.key_collected?
       level_finished
     end
+    @bugs.each{ |bug| bug.update }
   end
 
   def draw
@@ -45,8 +46,17 @@ class Level
   end
 
   def hit_by_bug?
+    player_box = @player.hit_box(@player.x, @player.y)
     @bugs.any? do |bug|
-      Gosu::distance(@player.x, @player.y, bug.x, bug.y) < 35
+      bug_box = bug.hit_box(bug.x, bug.y)
+      if player_box[:x] + player_box[:width] >= bug_box[:x] &&
+        player_box[:x] <= bug_box[:x] + bug_box[:width] &&
+        player_box[:y] + player_box[:height] >= bug_box[:y] &&
+        player_box[:y] <= bug_box[:y] + bug_box[:height]
+        true
+      else
+        false
+      end
     end
   end
 
@@ -76,7 +86,7 @@ class Level
           when 'G'
             gems << ColoredGem.new(@window, column, row)
           when 'B'
-            bugs << Bug.new(@window, column, row)
+            bugs << Bug.new(@window, self, column, row)
           when 'K'
             key = Key.new(@window, column, row)
           else
