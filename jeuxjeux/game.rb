@@ -1,18 +1,14 @@
 #!/usr/bin/env ruby -w
-$LOAD_PATH << './lib'
 
 require 'rubygems'
 require 'gosu'
-require 'menu'
-require 'game_over_screen'
-require 'level_finished_screen'
-require 'level'
-require 'tile'
-require 'map'
-require 'colored_gem'
-require 'bug'
-require 'key'
-require 'player'
+
+# just require all files in lib directory
+# I'm lazy
+$LOAD_PATH << './lib'
+Dir.glob("lib/*.rb").each do |file|
+  require File.basename(file, "*.rb")
+end
 
 include Gosu
 
