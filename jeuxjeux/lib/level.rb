@@ -8,7 +8,7 @@ class Level
     @window                 = window
     @window.caption         = "RailsGirls: The Mysteries of Ruby"
     @background_music       = Song.new(@window, "media/4pm.mp3")
-    @map                    = Map.new(@window, ROWS, COLUMNS)
+    @map                    = Map.new(@window)
     @player, @gems, @bugs, @key = read_level(level, ROWS, COLUMNS)
     @background_music.play(true) unless ENV['DISABLE_SOUND'] == 'true'
   end
@@ -67,7 +67,8 @@ class Level
 
     rows.times do |row|
       columns.times do |column|
-        case level[row][column]
+        tile_type = level[row][column]
+        case tile_type
           when 'P'
             player = Player.new(@window, column, row)
           when 'G'
@@ -77,8 +78,8 @@ class Level
           when 'K'
             key = Key.new(@window, column, row)
           else
-            #nothing
         end
+        @map.add_tile(row, column, tile_type)
       end
     end
 

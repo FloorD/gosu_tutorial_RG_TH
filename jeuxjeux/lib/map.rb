@@ -1,26 +1,23 @@
 class Map
-  def initialize(window, rows, columns)
+  def initialize(window)
     @window = window
-    @tiles = setup_tiles(window, rows, columns)
+    @tiles = [] #setup_tiles(window, rows, columns)
+    @water_image = Image.new(window, "media/water.png", true)
+    @grass_image = Image.new(window, "media/grass_block.png", true)
   end
 
   def draw
-    @tiles.each{|t| t[:image].draw(t[:x], t[:y], 0) }
+    @tiles.each{|t| t.draw }
   end
 
-  def setup_tiles(window, rows, columns)
-    tiles = []
-    image = Image.new(window, "media/grass_block.png", true)
-    rows.times do |y|
-      columns.times do |x|
-        tiles << {
-          :image => image,
-          :x => x * image.width,
-          :y => -45 + y * 85
-        }
-      end
+  def add_tile(row, column, type)
+    image = case type
+      when 'W'
+        @water_image
+      else
+        @grass_image
     end
-
-    tiles
+    @tiles << Tile.new(@window, row, column, image, false)
   end
+
 end
