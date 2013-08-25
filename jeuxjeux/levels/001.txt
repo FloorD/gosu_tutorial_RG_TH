@@ -1,11 +1,11 @@
-#: grass, G: green gem
+#: grass, G: gem, W: water, D: dirt, P: player, K: key, S: stone
 #G##B#WWW######
 ####B#WWW#G####
 ####B#WWW######
 #G##########G##
-###############
-######G########
-############G##
+##SSSSS########
+######G##DDD###
+#########DDDG##
 ########G######
 ############K##
 #P##B###G######

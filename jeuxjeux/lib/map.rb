@@ -5,6 +5,12 @@ class Map
     @tiles = [] #setup_tiles(window, rows, columns)
     @water_image = Image.new(window, "media/water.png", true)
     @grass_image = Image.new(window, "media/grass_block.png", true)
+    @tile_specs   = {
+      "W" => {:image => Image.new(window, "media/water.png",       true)  , :walkable => false },
+      "#" => {:image => Image.new(window, "media/grass_block.png", true)  , :walkable => true  },
+      "S" => {:image => Image.new(window, "media/stone_block.png", true)  , :walkable => true  },
+      "D" => {:image => Image.new(window, "media/dirt_block.png",  true)  , :walkable => true  }
+    }
   end
 
   def draw
@@ -12,13 +18,12 @@ class Map
   end
 
   def add_tile(row, column, type)
-    tile = case type
-      when 'W'
-        Tile.new(@window, row, column, @water_image, false)
-      else
-        Tile.new(@window, row, column, @grass_image, true)
+    tile_spec = if @tile_specs.keys.include?(type)
+      @tile_specs[type]
+    else
+      @tile_specs["#"]
     end
-    @tiles << tile
+    @tiles << Tile.new(@window, row, column, tile_spec[:image], tile_spec[:walkable])
   end
 
   def walkable?(hit_box)
