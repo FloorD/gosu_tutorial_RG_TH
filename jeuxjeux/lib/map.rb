@@ -1,4 +1,5 @@
 class Map
+
   def initialize(window)
     @window = window
     @tiles = [] #setup_tiles(window, rows, columns)
@@ -11,13 +12,20 @@ class Map
   end
 
   def add_tile(row, column, type)
-    image = case type
+    tile = case type
       when 'W'
-        @water_image
+        Tile.new(@window, row, column, @water_image, false)
       else
-        @grass_image
+        Tile.new(@window, row, column, @grass_image, true)
     end
-    @tiles << Tile.new(@window, row, column, image, false)
+    @tiles << tile
+  end
+
+  def walkable?(hit_box)
+    blocked = @tiles.any? do |tile|
+      tile.blocked?(hit_box)
+    end
+    !blocked
   end
 
 end

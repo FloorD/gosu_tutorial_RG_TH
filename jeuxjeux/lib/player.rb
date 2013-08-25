@@ -4,16 +4,21 @@ class Player
 
   attr_reader :x, :y
 
-  def initialize(window, column, row)
-    @window = window
-    @image = Image.new(@window, "media/player.png", true)
-    @width = @image.width
-    @height = @image.height
+  def initialize(window, level, column, row)
+    @window   = window
+    @level    = level
+    @image    = Image.new(@window, "media/player.png", true)
+    @width    = @image.width
+    @height   = @image.height
     @offset_x = 40
     @offset_y = 70
     @x = column * @image.width
     @y = row * @offset_y
     @key_collected = false
+  end
+
+  def hit_box(x, y)
+    {:x => x, :y => y + 86, :width => @width, :height => 100}
   end
 
   def update
@@ -42,7 +47,7 @@ class Player
   def move(x, y)
     new_x = @x + x
     new_y = @y + y
-    if fits?(new_x, new_y)
+    if fits?(new_x, new_y) && @level.map.walkable?(hit_box(new_x, new_y))
       @x = new_x
       @y = new_y
     end

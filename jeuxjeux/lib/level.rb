@@ -1,5 +1,7 @@
 class Level
 
+  attr_reader :map
+
   ROWS = 11
   COLUMNS = 15
 
@@ -70,7 +72,7 @@ class Level
         tile_type = level[row][column]
         case tile_type
           when 'P'
-            player = Player.new(@window, column, row)
+            player = Player.new(@window, self, column, row)
           when 'G'
             gems << ColoredGem.new(@window, column, row)
           when 'B'
