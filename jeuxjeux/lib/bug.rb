@@ -13,7 +13,7 @@ class Bug
     @x = column * @image.width
     @y = row * 75 - @offset_y
     @direction = :down
-    @walking_speed = rand(2..10)
+    @walking_speed = rand(2..5)
   end
 
   def hit_box(x, y)

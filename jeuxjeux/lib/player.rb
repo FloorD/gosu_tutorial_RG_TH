@@ -1,6 +1,6 @@
 class Player
 
-  WALKING_SPEED = 10
+  WALKING_SPEED = 5
 
   attr_reader :x, :y
 
