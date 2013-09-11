@@ -1,11 +1,5 @@
 #RailsGirls: The Mysteries of Ruby
 
-Copy the repository by opening (a new tab in your) terminal. If you were working on the Rails Girls app in the mean time, make sure you're in your home directory by running ```cd```.  
-Now run ```git clone https://github.com/FloorD/gosu_tutorial_RG_TH.git```  
-aaand change into the proper directory using ```cd gosu_tutorial_RG_TH/jumpingem```.  
-
-##Installation
-
 We're using the [gosu](http://www.libgosu.org/) 2D game development library for our little game. 
 
 ``` gem install gosu ```  
@@ -27,8 +21,17 @@ or:
 or:  
 ``` ruby Tutorial.rb ```  
 
+##Enough with those examples already!
 
-##Running it
+Copy the repository by opening (a new tab in your) terminal. If you were working on the Rails Girls app in the mean time, make sure you're in your home directory by running ```cd```.  
+
+Now run   
+``` git clone https://github.com/FloorD/gosu_tutorial_RG_TH.git ```  
+
+aaand change into the proper directory using ```cd gosu_tutorial_RG_TH/jumpingem```.  
+
+
+##Run!
 
 To play our little game, open it using the terminal:  
 
@@ -66,7 +69,21 @@ def draw
 end  
 </pre>
 
-Want to play around a bit? Copy the contents of ```game.rb``` in a new ```.rb``` file. Save it and name it as you'd like. Now try and change some stuff in the ```draw``` method and run the game in your terminal to see the changes.  
+Want to play around a bit? Copy the contents of ```game.rb``` in a new ```.rb``` file. Save it and name it as you'd like. Now try and change some stuff in the game and run it in your terminal to see the changes.  
+
+Think you have more graphic skills than Patrick? Then you can try and create a new ```sprites.png```! Don't forget to call it here:  
+
+<pre>
+def initialize
+    super(640, 480, false)
+    self.caption = "Jump 'n Run"
+    @standing, @walk1, @walk2, @jump = *Image.load_tiles(self, "sprites.png", 100, 160, false)
+    @x, @y = 400, 0
+    @vy = 0
+    @dir = :left
+    @cur_image = @standing
+  end
+</pre>  
 
 And see the ```Game.new.show```? That creates a new instance. It has no memory, so when you get stuck in the game, you can just start a new game.   
 
