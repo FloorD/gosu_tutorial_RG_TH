@@ -6,7 +6,7 @@ aaand change into the proper directory using ```cd gosu_tutorial_RG_TH/jumpingem
 
 ##Installation
 
-We're using the [gosu][1] 2D game development library for our little game. 
+We're using the [gosu](http://www.libgosu.org/) 2D game development library for our little game. 
 
 ``` gem install gosu ```  
 
@@ -46,8 +46,10 @@ Let's inspect some code, shall we? Open ```game.rb``` in your texteditor. See th
 ... right at the top of your empty file? Here we make sure we 'call' the necessary gem, so we can move on to our ```class``` (or multiple classes).  
 So we have our  
 
-``` class Game ```  
-``` end ```  
+<pre>
+class Game   
+end  
+</pre>
 
 ... thing going on. The ```def```'s you see within this Game class, are  methods. Here we **def**ine which instructions the program should follow. Take a look for instance at the following snippet:   
 <pre> 
