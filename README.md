@@ -5,31 +5,13 @@ gosu tutorial for Rails Girls The Hague
 The actual source code, wiki, issue tracker etc. are all hosted on [GitHub][2]. The best entry point into Gosu's documentation is the [wiki home page][3].
 
 ####Install:  
-```gem install gosu```
+```gem install gosu```  
 
-or add ```gem "gosu", "~> 0.7.48"``` to your Gemfile and run ```bundle```.
-
-To test whether everything works as expected, you can use this Hello World script:
-```
-require 'rubygems' # only necessary in Ruby 1.8
-require 'gosu'
-
-class MyWindow < Gosu::Window
-  def initialize
-   super(640, 480, false)
-   self.caption = 'Hello World!'
-  end
-end
-
-window = MyWindow.new
-window.show
-```
+or add ```gem "gosu", "~> 0.7.48"``` to your Gemfile and run ```bundle```.  
 
 #####Play around with the example games
 
-```
-cd $GEM_HOME/gems/gosu-0.7.48/examples
-```
+```cd $GEM_HOME/gems/gosu-0.7.48/examples```
 
 and then:
 ```ruby CptnRuby.rb```
