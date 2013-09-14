@@ -49,10 +49,8 @@ Let's inspect some code, shall we? Open ```game.rb``` in your texteditor. See th
 ... right at the top of your empty file? Here we make sure we 'call' the necessary gem, so we can move on to our ```class``` (or multiple classes).
 So we have our
 
-<pre>
-class Game < Window
-end
-</pre>
+``` class Game < Window ```   
+``` end ```
 
 ... thing going on. The ```def```'s you see within this Game class, are  methods. Here we **def**ine which instructions the program should follow. Take a look for instance at the following snippet:
 <pre>
