@@ -5,15 +5,24 @@ class Ship
   def initialize(window, target_x, target_y)
     @window = window
     @image  = Image.new(@window, "startfighter.bmp", true)
-    @x      = 400
-    @y      = 100
+    @x      = 300
+    @y      = 50
     @target_x = target_x
     @target_y = target_y
   end
 
   def update
-    @x += 1 if @x < @target_x
-    @y += 1 if @y < @target_y
+    if @x < @target_x
+      @x += 1
+    elsif @x > @target_x
+      @x -= 1
+    end
+
+    if @y < @target_y
+      @y += 1
+    elsif @y > @target_y
+      @y -= 1
+    end
   end
 
   def draw
@@ -25,7 +34,7 @@ class Game < Window
   def initialize
     super(640, 480, false)
     self.caption = "Do it"
-    @target_x = 500
+    @target_x = 100
     @target_y = 400
     @ship = Ship.new(self, @target_x, @target_y)
     @gem = Image.new(self, "gem.png", true)
